@@ -3,7 +3,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const notesRouter = require("./controllers/blogs");
-// const {requestLogger,unknownEndpoint,errorHandler} = require('./utils/middleware')
+const {
+  requestLogger,
+  unknownEndpoint,
+  errorHandler,
+} = require("./utils/middleware");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
 
@@ -19,11 +23,11 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-// app.use(requestLogger)
+app.use(requestLogger);
 
 app.use("/api/blogs", notesRouter);
 
-// app.use(unknownEndpoint)
-// app.use(errorHandler)
+app.use(unknownEndpoint);
+app.use(errorHandler);
 
 module.exports = app;
