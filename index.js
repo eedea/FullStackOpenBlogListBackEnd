@@ -5,6 +5,8 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 
+const logger = require("./utils/logger");
+
 const blogSchema = new mongoose.Schema({
   title: String,
   author: String,
@@ -19,7 +21,7 @@ mongoose
   .set("strictQuery", false)
   .connect(mongoUrl)
   .then(() => {
-    console.log("Connected to MongoDB");
+    logger.info("Connected to MongoDB");
   });
 
 app.use(cors());
@@ -41,5 +43,5 @@ app.post("/api/blogs", (request, response) => {
 
 const PORT = 3003;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
