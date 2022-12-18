@@ -93,6 +93,24 @@ describe("favorite blog", () => {
   });
   test("of a bigger list is finds out right", () => {
     const result = listHelper.favoriteBlog(listWithMoreBlogs);
-    expect(result).toBe(listWithMoreBlogs[2]);
+    expect(result).toEqual(listWithMoreBlogs[2]);
+  });
+});
+
+describe("most blogs", () => {
+  test("of empty list is undefined", () => {
+    const result = listHelper.mostBlogs([]);
+    expect(result).toBe(undefined);
+  });
+  test("when list has only one blog, is that blog's author with count of 1", () => {
+    const result = listHelper.mostBlogs(listWithOneBlog);
+    expect(result).toEqual({ author: "Edsger W. Dijkstra", blogs: 1 });
+  });
+  test("of a bigger list is finds out right", () => {
+    const result = listHelper.mostBlogs(listWithMoreBlogs);
+    expect(result).toEqual({
+      author: "Robert C. Martin",
+      blogs: 3,
+    });
   });
 });
