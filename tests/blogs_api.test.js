@@ -62,6 +62,11 @@ describe("blogs get request", () => {
 
     expect(response.body).toHaveLength(6);
   }, 100000);
+  test("unique identigier is defined as 'id'", async () => {
+    const response = await api.get("/api/blogs");
+
+    expect(response.body[0].id).toBeDefined();
+  }, 100000);
 });
 
 afterAll(() => {
