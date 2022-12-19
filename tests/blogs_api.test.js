@@ -96,7 +96,7 @@ describe("when posting a new blog", () => {
     const savedBlog = await api.post("/api/blogs").send(newBlog);
     expect(savedBlog.body).toMatchObject(newBlog);
   }, 100000);
-  test("set Likes value to 0 if not defined in request", async () => {
+  test("sets Likes value to 0 if not defined in request", async () => {
     const newBlog = {
       title: "Go To Statement Considered Harmful",
       author: "Edsger W. Dijkstra",
@@ -104,7 +104,21 @@ describe("when posting a new blog", () => {
     };
     const savedBlog = await api.post("/api/blogs").send(newBlog);
     expect(savedBlog.body.likes).toBe(0);
-  });
+  }, 100000);
+  test("returns status 400 if blog url is missing", async () => {
+    const newBlogWithNoURL = {
+      title: "Go To Statement Considered Harmful",
+      author: "Edsger W. Dijkstra",
+    };
+    await api.post("/api/blogs").send(newBlogWithNoURL).expect(400);
+  }, 100000);
+  test("returns status 400 if blog title is missing", async () => {
+    const newBlogWithNotitle = {
+      author: "Edsger W. Dijkstra",
+      url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+    };
+    await api.post("/api/blogs").send(newBlogWithNotitle).expect(400);
+  }, 100000);
 });
 
 afterAll(() => {
