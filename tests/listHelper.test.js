@@ -17,6 +17,7 @@ const listWithOneBlog = [
     __v: 0,
   },
 ];
+
 const listWithMoreBlogs = [
   {
     _id: "5a422a851b54a676234d17f7",
@@ -67,6 +68,7 @@ const listWithMoreBlogs = [
     __v: 0,
   },
 ];
+
 describe("total likes", () => {
   test("of empty list is zero", () => {
     const result = listHelper.totalLikes([]);
