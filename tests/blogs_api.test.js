@@ -62,10 +62,39 @@ describe("blogs get request", () => {
 
     expect(response.body).toHaveLength(6);
   }, 100000);
+
   test("unique identigier is defined as 'id'", async () => {
     const response = await api.get("/api/blogs");
 
     expect(response.body[0].id).toBeDefined();
+  }, 100000);
+});
+
+describe("when posting a new blog", () => {
+  test("the total number of blogs in the system is increased by one", async () => {
+    const newBlog = {
+      title: "Go To Statement Considered Harmful",
+      author: "Edsger W. Dijkstra",
+      url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+      likes: 5,
+    };
+    const savedBlog = await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+    const newBlogslistRes = await api.get("/api/blogs");
+    expect(newBlogslistRes.body).toHaveLength(7);
+  }, 100000);
+  test("the blog post is saved correctly to the database", async () => {
+    const newBlog = {
+      title: "Go To Statement Considered Harmful",
+      author: "Edsger W. Dijkstra",
+      url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+      likes: 5,
+    };
+    const savedBlog = await api.post("/api/blogs").send(newBlog);
+    expect(savedBlog.body).toMatchObject(newBlog);
   }, 100000);
 });
 
