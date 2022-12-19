@@ -96,6 +96,15 @@ describe("when posting a new blog", () => {
     const savedBlog = await api.post("/api/blogs").send(newBlog);
     expect(savedBlog.body).toMatchObject(newBlog);
   }, 100000);
+  test("set Likes value to 0 if not defined in request", async () => {
+    const newBlog = {
+      title: "Go To Statement Considered Harmful",
+      author: "Edsger W. Dijkstra",
+      url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+    };
+    const savedBlog = await api.post("/api/blogs").send(newBlog);
+    expect(savedBlog.body.likes).toBe(0);
+  });
 });
 
 afterAll(() => {
